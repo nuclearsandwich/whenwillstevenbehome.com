@@ -4,7 +4,13 @@ require "mustache"
 
 index = Mustache.new
 updated_at = Time.now.strftime "%c"
-index.template = File.read File.expand_path("./index.html.mustache")
-text = index.render :updated_at => updated_at, :when => ARGV.join(' ')
+message = ARGV.join ' '
 
-File.write File.expand_path("./index.html"), text
+index.template = File.read File.expand_path("./index.html.mustache")
+html = index.render :updated_at => updated_at, :message => message
+
+File.write File.expand_path("./index.html"), html
+
+`git add index.html`
+`git commit -m"#{message}"`
+`git push`
