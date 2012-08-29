@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "mustache"
+
+index = Mustache.new
+updated_at = Time.now.strftime "%c"
+index.template = File.read File.expand_path("./index.html.mustache")
+text = index.render :updated_at => updated_at, :when => ARGV.join(' ')
+
+File.write File.expand_path("./index.html"), text
